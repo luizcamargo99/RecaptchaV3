@@ -1,0 +1,19 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<button @onclick="async() => { await GetTokenAsync(); }">Gerar Token</button>
+<span>@_token</span>
+
+@code {
+    [Inject]
+    private IJSRuntime _jsRuntime { get; set; }
+
+    private string _token { get; set; } = string.Empty;
+
+    private async Task GetTokenAsync()
+    {
+        _token = await _jsRuntime.InvokeAsync<string>("recaptcha.getToken");
+    }
+
+}
